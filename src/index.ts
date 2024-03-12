@@ -20,6 +20,11 @@ app.get('/', (_req, res) => {
     </head>
     <body>
       <h1>Welcome to Guidify API</h1>
+        <ul>
+          <li><a href="/api/login">Login</a></li>
+          <li><a href="/api/users">Users</a></li>
+          <li><a href="/api/services">Services</a></li>
+        </ul>
     </body>
   </html>
   `
