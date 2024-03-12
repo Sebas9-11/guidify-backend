@@ -10,10 +10,20 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 app.get('/', (_req, res) => {
-  res.send('Guidify API is running!')
+  const htmlResponse = `
+  <html>
+    <head>
+      <title>Guidify API</title>
+    </head>
+    <body>
+      <h1>Welcome to Guidify API</h1>
+    </body>
+  </html>
+  `
+  res.send(htmlResponse)
 })
 
 app.use('/api/login', login)

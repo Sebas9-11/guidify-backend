@@ -11,6 +11,4 @@ const config = {
   database: process.env.POSTGRES_DATABASE
 }
 
-console.log(config)
-
 export const connection = new Pool(config)
