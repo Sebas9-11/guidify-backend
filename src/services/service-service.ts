@@ -52,3 +52,27 @@ export const getServiceById = async (id: number) => {
     return err
   }
 }
+export const createServiceUser = async (service: Service) => {
+  const {
+    title,
+    description,
+    date,
+    in_person,
+    virtual,
+    city_id,
+    department_id,
+    payment_id,
+    user_id
+  } = service
+
+  const query = `
+    INSERT INTO service (title, description, date, in_person, virtual, city_id, department_id, payment_id, user_id)
+    VALUES ('${title}', '${description}', '${date}', '${in_person}', '${virtual}', ${city_id}, ${department_id}, ${payment_id}, ${user_id})
+  `
+  try {
+    const response = await connection.query(query)
+    return response.rows
+  } catch (err) {
+    return err
+  }
+}
