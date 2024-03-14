@@ -1,5 +1,6 @@
 import express from 'express'
 import { User } from '../../types'
+import { createToken } from '../services/token-service'
 import {
   createUser,
   deleteUser,
@@ -21,6 +22,7 @@ router.get('/', async (_req, res) => {
 router.post('/', async (req, res) => {
   const user: User = req.body
   const data = await createUser(user)
+  await createToken(user.email, user.password)
   res.send(data)
 })
 

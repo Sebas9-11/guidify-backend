@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const token_service_1 = require("../services/token-service");
 const user_service_1 = require("../services/user-service");
 const router = express_1.default.Router();
 router.get('/', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +23,7 @@ router.get('/', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.body;
     const data = yield (0, user_service_1.createUser)(user);
+    yield (0, token_service_1.createToken)(user.email, user.password);
     res.send(data);
 }));
 router.get('/supplier', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {

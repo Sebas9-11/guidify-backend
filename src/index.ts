@@ -1,41 +1,43 @@
 import cors from 'cors'
 import express from 'express'
+import path from 'path'
 
-import login from './routes/login'
-import service from './routes/service'
-import user from './routes/users'
+import auth from './routes/auth'
+import cities from './routes/cities'
+import departments from './routes/deparments'
+import services from './routes/service'
+import token from './routes/token'
+import users from './routes/users'
+import { validateToken } from './services/token-service'
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static(path.join(__dirname, './views')))
+app.use(express.static(path.join(__dirname, './assets')))
+
+app.use(validateToken)
 
 const PORT = process.env.PORT || 3000
 
+const viewPath = path.join(__dirname, './views')
+
 app.get('/', (_req, res) => {
-  const htmlResponse = `
-  <html>
-    <head>
-      <title>Guidify API</title>
-    </head>
-    <body>
-      <h1>Welcome to Guidify API</h1>
-        <ul>
-          <li><a href="/api/login">Login</a></li>
-          <li><a href="/api/users">Users</a></li>
-          <li><a href="/api/services">Services</a></li>
-        </ul>
-    </body>
-  </html>
-  `
-  res.send(htmlResponse)
+  const htmlResponse = path.join(viewPath, 'index.html')
+  res.sendFile(htmlResponse)
 })
+app.use('/auth', auth)
 
-app.use('/api/login', login)
+app.use('/api/token', token)
 
-app.use('/api/users', user)
+app.use('/api/users', users)
 
-app.use('/api/services', service)
+app.use('/api/services', services)
+
+app.use('/api/cities', cities)
+
+app.use('/api/departments', departments)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
